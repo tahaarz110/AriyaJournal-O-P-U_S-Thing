@@ -1,0 +1,20 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Controls/DynamicForm.xaml
+شماره فایل: 105
+توضیح: کنترل فرم داینامیک
+============================================================================= -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Controls.DynamicForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FlowDirection="RightToLeft">
+    
+    <Grid x:Name="FormContainer">
+        <!-- محتوای فرم به صورت داینامیک اینجا رندر می‌شود -->
+    </Grid>
+    
+</UserControl>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Controls/DynamicForm.xaml
+============================================================================= -->

@@ -1,0 +1,88 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/AriaJournal.Core.csproj
+شماره فایل: 104
+توضیح: فایل پروژه
+============================================================================= -->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  
+    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
+    <StartupObject>AriaJournal.Core.UI.App</StartupObject>
+    <RootNamespace>AriaJournal.Core</RootNamespace>
+    <AssemblyName>AriaJournal</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>Aria Team</Authors>
+    <Company>Aria</Company>
+    <Product>آریا ژورنال</Product>
+    <Description>نرم‌افزار ژورنال هوشمند معاملاتی</Description>
+  </PropertyGroup>
+
+  <!-- NuGet Packages -->
+  <ItemGroup>
+    <!-- Entity Framework Core -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    
+    <!-- Dependency Injection -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    
+    <!-- Caching -->
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+    
+    <!-- MVVM -->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="NCalcSync" Version="4.3.0" />
+    
+    <!-- YAML -->
+    <PackageReference Include="YamlDotNet" Version="16.0.0" />
+    
+    <!-- Password Hashing -->
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    
+    <!-- Validation -->
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
+    
+    <!-- Expression Evaluation -->
+    
+    <!-- Logging -->
+    <PackageReference Include="Serilog" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+    
+    <!-- Visual Basic Runtime (for InputBox) -->
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+  </ItemGroup>
+
+  <!-- Resources -->
+  <ItemGroup>
+    <Resource Include="Resources\app.ico" />
+  </ItemGroup>
+
+  <!-- Content Files -->
+  <ItemGroup>
+    <None Update="schemas\*.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Plugins Directory -->
+  <ItemGroup>
+    <None Include="plugins\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
+ 
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/AriaJournal.Core.csproj
+============================================================================= -->

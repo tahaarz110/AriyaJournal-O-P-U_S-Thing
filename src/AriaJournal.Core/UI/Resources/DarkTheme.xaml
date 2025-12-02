@@ -1,0 +1,52 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Resources/DarkTheme.xaml
+توضیح: تم تیره - نسخه اصلی
+============================================================================= -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- رنگ‌های اصلی -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#0078D4"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#1084D8"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#006CBD"/>
+
+    <!-- رنگ‌های ثانویه -->
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#3C3C3C"/>
+    <SolidColorBrush x:Key="SecondaryHoverBrush" Color="#4A4A4A"/>
+
+    <!-- رنگ‌های خطر -->
+    <SolidColorBrush x:Key="DangerBrush" Color="#E74C3C"/>
+    <SolidColorBrush x:Key="DangerHoverBrush" Color="#C0392B"/>
+
+    <!-- رنگ‌های موفقیت -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="#27AE60"/>
+
+    <!-- رنگ‌های هشدار -->
+    <SolidColorBrush x:Key="WarningBrush" Color="#F39C12"/>
+
+    <!-- پس‌زمینه‌ها -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#1A1A2E"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#16213E"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#0F0F1A"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#1F1F3A"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#2D2D4A"/>
+
+    <!-- متن -->
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#ECEFF4"/>
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="#8E8E9A"/>
+
+    <!-- خطوط و حاشیه‌ها -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#3D3D5C"/>
+    <SolidColorBrush x:Key="HoverBrush" Color="#2A2A4A"/>
+    <SolidColorBrush x:Key="AlternateRowBrush" Color="#1E1E38"/>
+
+    <!-- غیرفعال -->
+    <SolidColorBrush x:Key="DisabledBrush" Color="#4A4A5A"/>
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#6A6A7A"/>
+
+</ResourceDictionary>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Resources/DarkTheme.xaml
+============================================================================= -->

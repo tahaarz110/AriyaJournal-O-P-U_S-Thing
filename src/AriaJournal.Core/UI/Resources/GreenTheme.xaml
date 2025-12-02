@@ -1,0 +1,52 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Resources/GreenTheme.xaml
+توضیح: تم سبز مدرن
+============================================================================= -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- رنگ‌های اصلی -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#10B981"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#059669"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#047857"/>
+    
+    <!-- رنگ‌های ثانویه -->
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#1A3D2E"/>
+    <SolidColorBrush x:Key="SecondaryHoverBrush" Color="#2A4D3E"/>
+    
+    <!-- رنگ‌های خطر -->
+    <SolidColorBrush x:Key="DangerBrush" Color="#EF4444"/>
+    <SolidColorBrush x:Key="DangerHoverBrush" Color="#DC2626"/>
+    
+    <!-- رنگ‌های موفقیت -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="#22C55E"/>
+    
+    <!-- رنگ‌های هشدار -->
+    <SolidColorBrush x:Key="WarningBrush" Color="#F59E0B"/>
+    
+    <!-- پس‌زمینه‌ها -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#0D1F17"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1A2F23"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#0A1810"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#1A2F23"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#2A4035"/>
+    
+    <!-- متن -->
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#ECFDF5"/>
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="#86EFAC"/>
+    
+    <!-- خطوط و حاشیه‌ها -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#3D5C4A"/>
+    <SolidColorBrush x:Key="HoverBrush" Color="#2A4035"/>
+    <SolidColorBrush x:Key="AlternateRowBrush" Color="#1A2F23"/>
+    
+    <!-- غیرفعال -->
+    <SolidColorBrush x:Key="DisabledBrush" Color="#3D5C4A"/>
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#6B8F7A"/>
+
+</ResourceDictionary>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Resources/GreenTheme.xaml
+============================================================================= -->

@@ -1,0 +1,114 @@
+# =============================================================================
+# فایل: schemas/schema.menu.yaml
+# شماره فایل: 21
+# توضیح: Schema منوی اصلی برنامه
+# =============================================================================
+
+id: mainMenu
+version: '1.0'
+defaultActiveItem: trades
+
+groups:
+  # گروه اصلی
+  - id: main
+    titleFa: منوی اصلی
+    order: 1
+    showSeparator: true
+    items:
+      - id: trades
+        titleFa: معاملات
+        icon: 📋
+        navigateTo: TradeList
+        tooltip: لیست معاملات
+        order: 1
+        
+      - id: accounts
+        titleFa: حساب‌ها
+        icon: 🏦
+        navigateTo: AccountList
+        tooltip: مدیریت حساب‌ها
+        order: 2
+
+  # گروه تحلیل (برای پلاگین‌ها)
+  - id: analysis
+    titleFa: تحلیل
+    icon: 📊
+    order: 2
+    showSeparator: true
+    items:
+      - id: dashboard
+        titleFa: داشبورد
+        icon: 📈
+        navigateTo: Dashboard
+        tooltip: داشبورد تحلیلی
+        order: 1
+        # این آیتم توسط پلاگین Dashboard فعال می‌شود
+        visible: false
+        
+      - id: reports
+        titleFa: گزارش‌ها
+        icon: 📑
+        navigateTo: Reports
+        tooltip: گزارش‌گیری
+        order: 2
+        visible: false
+
+  # گروه ابزارها
+  - id: tools
+    titleFa: ابزارها
+    icon: 🛠️
+    order: 3
+    showSeparator: true
+    items:
+      - id: fieldEditor
+        titleFa: مدیریت فیلدها
+        icon: 🔧
+        navigateTo: FieldEditor
+        tooltip: تعریف و ویرایش فیلدهای سفارشی
+        order: 1
+        
+      - id: columnEditor
+        titleFa: مدیریت ستون‌ها
+        icon: 📊
+        navigateTo: ColumnEditor
+        tooltip: تنظیم ستون‌های نمایشی
+        order: 2
+        
+      - id: import
+        titleFa: ورود داده
+        icon: 📥
+        navigateTo: Import
+        tooltip: ورود معاملات از فایل
+        order: 3
+        visible: false
+
+  # گروه سیستم
+  - id: system
+    titleFa: سیستم
+    order: 100
+    showSeparator: false
+    items:
+      - id: backup
+        titleFa: پشتیبان‌گیری
+        icon: 💾
+        navigateTo: Backup
+        tooltip: پشتیبان‌گیری و بازیابی
+        order: 1
+        
+      - id: plugins
+        titleFa: پلاگین‌ها
+        icon: 🧩
+        navigateTo: PluginManager
+        tooltip: مدیریت پلاگین‌ها
+        order: 2
+        
+      - id: settings
+        titleFa: تنظیمات
+        icon: ⚙️
+        navigateTo: Settings
+        tooltip: تنظیمات برنامه
+        order: 3
+
+# =============================================================================
+# پایان فایل: schemas/schema.menu.yaml
+# =============================================================================

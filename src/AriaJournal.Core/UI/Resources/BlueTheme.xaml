@@ -1,0 +1,52 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Resources/BlueTheme.xaml
+توضیح: تم آبی مدرن
+============================================================================= -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- رنگ‌های اصلی -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#3B82F6"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#2563EB"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1D4ED8"/>
+    
+    <!-- رنگ‌های ثانویه -->
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#1E3A5F"/>
+    <SolidColorBrush x:Key="SecondaryHoverBrush" Color="#2A4A6F"/>
+    
+    <!-- رنگ‌های خطر -->
+    <SolidColorBrush x:Key="DangerBrush" Color="#EF4444"/>
+    <SolidColorBrush x:Key="DangerHoverBrush" Color="#DC2626"/>
+    
+    <!-- رنگ‌های موفقیت -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="#22C55E"/>
+    
+    <!-- رنگ‌های هشدار -->
+    <SolidColorBrush x:Key="WarningBrush" Color="#F59E0B"/>
+    
+    <!-- پس‌زمینه‌ها -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#0F172A"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#1E293B"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#0C1222"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#1E293B"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#334155"/>
+    
+    <!-- متن -->
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="#94A3B8"/>
+    
+    <!-- خطوط و حاشیه‌ها -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#475569"/>
+    <SolidColorBrush x:Key="HoverBrush" Color="#334155"/>
+    <SolidColorBrush x:Key="AlternateRowBrush" Color="#1E293B"/>
+    
+    <!-- غیرفعال -->
+    <SolidColorBrush x:Key="DisabledBrush" Color="#475569"/>
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#64748B"/>
+
+</ResourceDictionary>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Resources/BlueTheme.xaml
+============================================================================= -->

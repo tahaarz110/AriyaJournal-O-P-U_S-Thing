@@ -1,0 +1,122 @@
+# =============================================================================
+# فایل: schemas/schema.settings.yaml
+# شماره فایل: 110
+# توضیح: Schema فرم تنظیمات
+# =============================================================================
+
+module: Settings
+version: '1.0'
+
+forms:
+  - id: settingsForm
+    titleFa: تنظیمات
+    direction: rtl
+    
+    sections:
+      - id: appearance
+        titleFa: ظاهر برنامه
+        columns: 2
+        fields:
+          - id: theme
+            labelFa: تم
+            type: select
+            defaultValue: 'Dark'
+            options:
+              - { value: 'Dark', labelFa: '🌙 تیره' }
+              - { value: 'Light', labelFa: '☀️ روشن' }
+          
+          - id: language
+            labelFa: زبان
+            type: select
+            defaultValue: 'fa'
+            options:
+              - { value: 'fa', labelFa: 'فارسی' }
+              - { value: 'en', labelFa: 'English' }
+      
+      - id: display
+        titleFa: نمایش
+        columns: 3
+        fields:
+          - id: dateFormat
+            labelFa: فرمت تاریخ
+            type: select
+            defaultValue: 'yyyy/MM/dd'
+            options:
+              - { value: 'yyyy/MM/dd', labelFa: '1403/01/15' }
+              - { value: 'dd/MM/yyyy', labelFa: '15/01/1403' }
+              - { value: 'yyyy-MM-dd', labelFa: '1403-01-15' }
+          
+          - id: timeFormat
+            labelFa: فرمت زمان
+            type: select
+            defaultValue: 'HH:mm'
+            options:
+              - { value: 'HH:mm', labelFa: '14:30' }
+              - { value: 'hh:mm tt', labelFa: '02:30 PM' }
+          
+          - id: priceDecimals
+            labelFa: تعداد اعشار قیمت
+            type: integer
+            defaultValue: '5'
+            validation:
+              min: 0
+              max: 8
+          
+          - id: volumeDecimals
+            labelFa: تعداد اعشار حجم
+            type: integer
+            defaultValue: '2'
+            validation:
+              min: 0
+              max: 4
+          
+          - id: itemsPerPage
+            labelFa: آیتم در هر صفحه
+            type: select
+            defaultValue: '50'
+            options:
+              - { value: '25', labelFa: '۲۵' }
+              - { value: '50', labelFa: '۵۰' }
+              - { value: '100', labelFa: '۱۰۰' }
+      
+      - id: backup
+        titleFa: پشتیبان‌گیری
+        fields:
+          - id: autoBackup
+            labelFa: پشتیبان‌گیری خودکار
+            type: boolean
+            defaultValue: 'true'
+          
+          - id: autoBackupInterval
+            labelFa: بازه پشتیبان‌گیری (روز)
+            type: integer
+            defaultValue: '7'
+            validation:
+              min: 1
+              max: 30
+          
+          - id: backupPath
+            labelFa: مسیر پشتیبان‌گیری
+            type: text
+      
+      - id: notifications
+        titleFa: اعلان‌ها
+        columns: 2
+        fields:
+          - id: showNotifications
+            labelFa: نمایش اعلان‌ها
+            type: boolean
+            defaultValue: 'true'
+          
+          - id: playSounds
+            labelFa: پخش صدا
+            type: boolean
+            defaultValue: 'false'
+    
+    actions:
+      - { id: save, labelFa: ذخیره, style: primary }
+      - { id: reset, labelFa: بازنشانی }
+
+# =============================================================================
+# پایان فایل: schemas/schema.settings.yaml
+# =============================================================================

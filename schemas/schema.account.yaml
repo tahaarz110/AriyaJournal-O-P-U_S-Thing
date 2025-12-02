@@ -1,0 +1,110 @@
+# =============================================================================
+# فایل: schemas/schema.account.yaml
+# شماره فایل: 108
+# توضیح: Schema فرم حساب معاملاتی
+# =============================================================================
+
+module: Account
+version: '1.0'
+
+forms:
+  - id: accountEntry
+    titleFa: ثبت حساب جدید
+    direction: rtl
+    
+    sections:
+      - id: basic
+        titleFa: اطلاعات پایه
+        columns: 2
+        fields:
+          - id: name
+            labelFa: نام حساب
+            type: text
+            required: true
+            placeholder: مثال: حساب اصلی
+            validation:
+              minLength: 2
+              maxLength: 100
+              messageFa: نام حساب باید بین ۲ تا ۱۰۰ کاراکتر باشد
+          
+          - id: type
+            labelFa: نوع حساب
+            type: select
+            required: true
+            defaultValue: '2'
+            options:
+              - { value: '1', labelFa: 'واقعی (Real)' }
+              - { value: '2', labelFa: 'دمو (Demo)' }
+              - { value: '3', labelFa: 'Prop Trading' }
+              - { value: '4', labelFa: 'چالش' }
+          
+          - id: brokerName
+            labelFa: نام بروکر
+            type: text
+            required: true
+            placeholder: مثال: ICMarkets
+          
+          - id: accountNumber
+            labelFa: شماره حساب
+            type: text
+            placeholder: اختیاری
+          
+          - id: server
+            labelFa: سرور
+            type: text
+            placeholder: مثال: ICMarkets-Demo
+      
+      - id: financial
+        titleFa: اطلاعات مالی
+        columns: 3
+        fields:
+          - id: initialBalance
+            labelFa: موجودی اولیه
+            type: decimal
+            required: true
+            defaultValue: '10000'
+            validation:
+              min: 0
+              messageFa: موجودی نمی‌تواند منفی باشد
+          
+          - id: currency
+            labelFa: واحد ارز
+            type: select
+            required: true
+            defaultValue: 'USD'
+            options:
+              - { value: 'USD', labelFa: 'دلار (USD)' }
+              - { value: 'EUR', labelFa: 'یورو (EUR)' }
+              - { value: 'GBP', labelFa: 'پوند (GBP)' }
+              - { value: 'JPY', labelFa: 'ین (JPY)' }
+          
+          - id: leverage
+            labelFa: لوریج
+            type: integer
+            defaultValue: '100'
+            validation:
+              min: 1
+              max: 3000
+              messageFa: لوریج باید بین ۱ تا ۳۰۰۰ باشد
+      
+      - id: extra
+        titleFa: توضیحات
+        collapsed: true
+        fields:
+          - id: description
+            labelFa: توضیحات
+            type: textarea
+            placeholder: توضیحات اضافی درباره این حساب...
+          
+          - id: isDefault
+            labelFa: حساب پیش‌فرض
+            type: boolean
+            defaultValue: 'false'
+    
+    actions:
+      - { id: save, labelFa: ذخیره, style: primary }
+      - { id: cancel, labelFa: انصراف }
+
+# =============================================================================
+# پایان فایل: schemas/schema.account.yaml
+# =============================================================================

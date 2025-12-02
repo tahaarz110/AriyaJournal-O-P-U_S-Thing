@@ -1,0 +1,304 @@
+# =============================================================================
+# فایل: schemas/schema.grid.yaml
+# توضیح: تعریف ستون‌های گرید از metadata
+# =============================================================================
+
+module: Grid
+version: '1.0'
+
+# تعریف گریدها
+grids:
+
+  # گرید لیست معاملات
+  tradeList:
+    id: tradeList
+    titleFa: لیست معاملات
+    entityType: Trade
+    defaultSort: entryTime
+    defaultSortDesc: true
+    pageSize: 50
+    allowExport: true
+    allowColumnReorder: true
+    allowColumnResize: true
+    
+    columns:
+      - id: symbol
+        field: Symbol
+        headerFa: نماد
+        width: 100
+        frozen: true
+        sortable: true
+        filterable: true
+        visible: true
+        order: 1
+        
+      - id: direction
+        field: Direction
+        headerFa: جهت
+        width: 80
+        sortable: true
+        filterable: true
+        visible: true
+        order: 2
+        template: direction  # قالب خاص برای نمایش
+        
+      - id: volume
+        field: Volume
+        headerFa: حجم
+        width: 80
+        sortable: true
+        visible: true
+        order: 3
+        format: decimal:2
+        
+      - id: entryPrice
+        field: EntryPrice
+        headerFa: قیمت ورود
+        width: 100
+        sortable: true
+        visible: true
+        order: 4
+        format: decimal:5
+        
+      - id: entryTime
+        field: EntryTime
+        headerFa: زمان ورود
+        width: 140
+        sortable: true
+        filterable: true
+        visible: true
+        order: 5
+        format: datetime
+        
+      - id: exitPrice
+        field: ExitPrice
+        headerFa: قیمت خروج
+        width: 100
+        sortable: true
+        visible: true
+        order: 6
+        format: decimal:5
+        
+      - id: exitTime
+        field: ExitTime
+        headerFa: زمان خروج
+        width: 140
+        sortable: true
+        visible: true
+        order: 7
+        format: datetime
+        
+      - id: stopLoss
+        field: StopLoss
+        headerFa: حد ضرر
+        width: 100
+        visible: false
+        order: 8
+        format: decimal:5
+        
+      - id: takeProfit
+        field: TakeProfit
+        headerFa: حد سود
+        width: 100
+        visible: false
+        order: 9
+        format: decimal:5
+        
+      - id: profitLoss
+        field: ProfitLoss
+        headerFa: سود/زیان
+        width: 100
+        sortable: true
+        visible: true
+        order: 10
+        format: currency
+        template: profitLoss  # قالب خاص (رنگی)
+        
+      - id: commission
+        field: Commission
+        headerFa: کمیسیون
+        width: 80
+        visible: false
+        order: 11
+        format: decimal:2
+        
+      - id: swap
+        field: Swap
+        headerFa: سواپ
+        width: 80
+        visible: false
+        order: 12
+        format: decimal:2
+        
+      - id: netProfit
+        field: NetProfit
+        headerFa: سود خالص
+        width: 100
+        sortable: true
+        visible: true
+        order: 13
+        format: currency
+        template: profitLoss
+        calculated: true
+        formula: 'ProfitLoss - Commission - Abs(Swap)'
+        
+      - id: entryReason
+        field: EntryReason
+        headerFa: دلیل ورود
+        width: 200
+        visible: false
+        order: 14
+        
+      - id: followedPlan
+        field: FollowedPlan
+        headerFa: طبق پلن
+        width: 80
+        filterable: true
+        visible: true
+        order: 15
+        template: boolean
+        
+      - id: executionRating
+        field: ExecutionRating
+        headerFa: امتیاز
+        width: 80
+        sortable: true
+        visible: true
+        order: 16
+        template: rating
+        
+      - id: isClosed
+        field: IsClosed
+        headerFa: وضعیت
+        width: 80
+        filterable: true
+        visible: true
+        order: 17
+        template: status
+        
+    # تعریف قالب‌های خاص
+    templates:
+      direction:
+        type: badge
+        values:
+          - value: 1
+            text: '▲ خرید'
+            color: '#4CAF50'
+            background: '#E8F5E9'
+          - value: 2
+            text: '▼ فروش'
+            color: '#F44336'
+            background: '#FFEBEE'
+            
+      profitLoss:
+        type: conditional
+        conditions:
+          - condition: 'value > 0'
+            color: '#4CAF50'
+            prefix: '+'
+          - condition: 'value < 0'
+            color: '#F44336'
+          - condition: 'value == 0'
+            color: '#757575'
+            
+      boolean:
+        type: icon
+        values:
+          - value: true
+            icon: '✅'
+          - value: false
+            icon: '❌'
+            
+      rating:
+        type: stars
+        max: 5
+        
+      status:
+        type: badge
+        values:
+          - value: true
+            text: 'بسته'
+            color: '#757575'
+            background: '#EEEEEE'
+          - value: false
+            text: 'باز'
+            color: '#2196F3'
+            background: '#E3F2FD'
+
+  # گرید لیست حساب‌ها
+  accountList:
+    id: accountList
+    titleFa: لیست حساب‌ها
+    entityType: Account
+    defaultSort: createdAt
+    defaultSortDesc: true
+    pageSize: 20
+    
+    columns:
+      - id: name
+        field: Name
+        headerFa: نام حساب
+        width: 150
+        sortable: true
+        visible: true
+        order: 1
+        
+      - id: type
+        field: Type
+        headerFa: نوع
+        width: 100
+        filterable: true
+        visible: true
+        order: 2
+        template: accountType
+        
+      - id: brokerName
+        field: BrokerName
+        headerFa: بروکر
+        width: 120
+        visible: true
+        order: 3
+        
+      - id: initialBalance
+        field: InitialBalance
+        headerFa: موجودی اولیه
+        width: 120
+        visible: true
+        order: 4
+        format: currency
+        
+      - id: currency
+        field: Currency
+        headerFa: ارز
+        width: 60
+        visible: true
+        order: 5
+        
+      - id: tradesCount
+        field: TradesCount
+        headerFa: تعداد معاملات
+        width: 100
+        visible: true
+        order: 6
+        calculated: true
+        
+    templates:
+      accountType:
+        type: badge
+        values:
+          - value: 1
+            text: 'Real'
+            color: '#4CAF50'
+          - value: 2
+            text: 'Demo'
+            color: '#2196F3'
+          - value: 3
+            text: 'Prop'
+            color: '#9C27B0'
+          - value: 4
+            text: 'Challenge'
+            color: '#FF9800'
+
+# =============================================================================
+# پایان فایل: schemas/schema.grid.yaml
+# =============================================================================

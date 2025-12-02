@@ -1,0 +1,326 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Views/SettingsView.xaml
+توضیح: صفحه تنظیمات - اصلاح‌شده با پشتیبانی کامل از ۴ تم
+============================================================================= -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FlowDirection="RightToLeft"
+             Background="{DynamicResource BackgroundBrush}">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- هدر -->
+            <TextBlock Grid.Row="0"
+                       Text="⚙️ تنظیمات"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource ForegroundBrush}"
+                       Margin="0,0,0,20"/>
+
+            <!-- پیام‌ها -->
+            <StackPanel Grid.Row="1">
+                <Border Background="#E8F5E9"
+                        CornerRadius="5"
+                        Padding="10"
+                        Margin="0,0,0,15"
+                        Visibility="{Binding HasSuccess, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="{Binding SuccessMessage}"
+                               Foreground="#2E7D32"/>
+                </Border>
+
+                <Border Background="#FFEBEE"
+                        CornerRadius="5"
+                        Padding="10"
+                        Margin="0,0,0,15"
+                        Visibility="{Binding HasError, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="#C62828"/>
+                </Border>
+            </StackPanel>
+
+            <!-- محتوا -->
+            <StackPanel Grid.Row="2">
+                
+                <!-- ظاهر برنامه -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="10"
+                        Padding="20"
+                        Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="🎨 ظاهر برنامه"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource ForegroundBrush}"
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="تم"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox SelectedIndex="{Binding ThemeIndex, Mode=TwoWay}"
+                                          Style="{DynamicResource ComboBoxStyle}">
+                                    <ComboBoxItem Content="🌙 تیره (Dark)"/>
+                                    <ComboBoxItem Content="☀️ روشن (Light)"/>
+                                    <ComboBoxItem Content="🔵 آبی (Blue)"/>
+                                    <ComboBoxItem Content="🟢 سبز (Green)"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="زبان"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox SelectedIndex="{Binding LanguageIndex}"
+                                          Style="{DynamicResource ComboBoxStyle}">
+                                    <ComboBoxItem Content="فارسی"/>
+                                    <ComboBoxItem Content="English"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- پیش‌نمایش تم -->
+                        <Border Background="{DynamicResource SurfaceBrush}"
+                                CornerRadius="8"
+                                Padding="15"
+                                Margin="0,15,0,0">
+                            <StackPanel>
+                                <TextBlock Text="پیش‌نمایش تم انتخاب‌شده"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource SecondaryForegroundBrush}"
+                                           Margin="0,0,0,10"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border Background="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="4"
+                                            Padding="10,5"
+                                            Margin="0,0,10,0">
+                                        <TextBlock Text="دکمه اصلی" Foreground="White"/>
+                                    </Border>
+                                    <Border Background="{DynamicResource SecondaryBrush}"
+                                            CornerRadius="4"
+                                            Padding="10,5"
+                                            Margin="0,0,10,0">
+                                        <TextBlock Text="دکمه ثانویه" 
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                                    </Border>
+                                    <Border Background="{DynamicResource SuccessBrush}"
+                                            CornerRadius="4"
+                                            Padding="10,5"
+                                            Margin="0,0,10,0">
+                                        <TextBlock Text="موفق" Foreground="White"/>
+                                    </Border>
+                                    <Border Background="{DynamicResource DangerBrush}"
+                                            CornerRadius="4"
+                                            Padding="10,5">
+                                        <TextBlock Text="خطر" Foreground="White"/>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+
+                <!-- نمایش -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="10"
+                        Padding="20"
+                        Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="📊 نمایش"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource ForegroundBrush}"
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="فرمت تاریخ"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox ItemsSource="{Binding DateFormats}"
+                                          SelectedItem="{Binding SelectedDateFormat}"
+                                          Style="{DynamicResource ComboBoxStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="تعداد اعشار قیمت"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox SelectedIndex="{Binding PriceDecimalsIndex}"
+                                          Style="{DynamicResource ComboBoxStyle}">
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="آیتم در هر صفحه"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox SelectedItem="{Binding ItemsPerPage}"
+                                          Style="{DynamicResource ComboBoxStyle}">
+                                    <ComboBoxItem Content="25"/>
+                                    <ComboBoxItem Content="50"/>
+                                    <ComboBoxItem Content="100"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- پشتیبان‌گیری -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="10"
+                        Padding="20"
+                        Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="💾 پشتیبان‌گیری"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource ForegroundBrush}"
+                                   Margin="0,0,0,15"/>
+
+                        <CheckBox Content="پشتیبان‌گیری خودکار"
+                                  IsChecked="{Binding AutoBackup}"
+                                  Foreground="{DynamicResource ForegroundBrush}"
+                                  Margin="0,0,0,15"/>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Visibility="{Binding AutoBackup, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="هر"
+                                       Foreground="{DynamicResource ForegroundBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,10,0"/>
+                            <ComboBox Width="80"
+                                      SelectedItem="{Binding BackupInterval}"
+                                      Style="{DynamicResource ComboBoxStyle}">
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="14"/>
+                                <ComboBoxItem Content="30"/>
+                            </ComboBox>
+                            <TextBlock Text="روز یکبار"
+                                       Foreground="{DynamicResource ForegroundBrush}"
+                                       VerticalAlignment="Center"
+                                       Margin="10,0,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,15,0,0">
+                            <TextBlock Text="مسیر پشتیبان‌گیری:"
+                                       Foreground="{DynamicResource ForegroundBrush}"
+                                       Margin="0,0,0,5"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0"
+                                         Text="{Binding BackupPath}"
+                                         Style="{DynamicResource TextBoxStyle}"
+                                         IsReadOnly="True"/>
+                                <Button Grid.Column="1"
+                                        Content="انتخاب..."
+                                        Command="{Binding SelectBackupPathCommand}"
+                                        Style="{DynamicResource SecondaryButtonStyle}"
+                                        Margin="10,0,0,0"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- تغییر رمز عبور -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="10"
+                        Padding="20"
+                        Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="🔒 تغییر رمز عبور"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource ForegroundBrush}"
+                                   Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="رمز عبور فعلی"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <PasswordBox x:Name="CurrentPasswordBox"
+                                             Style="{DynamicResource PasswordBoxStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="رمز عبور جدید"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <PasswordBox x:Name="NewPasswordBox"
+                                             Style="{DynamicResource PasswordBoxStyle}"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="تکرار رمز جدید"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <PasswordBox x:Name="ConfirmPasswordBox"
+                                             Style="{DynamicResource PasswordBoxStyle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Button Content="تغییر رمز عبور"
+                                Command="{Binding ChangePasswordCommand}"
+                                Style="{DynamicResource SecondaryButtonStyle}"
+                                HorizontalAlignment="Right"
+                                Margin="0,15,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- دکمه ذخیره -->
+                <Button Content="💾 ذخیره تنظیمات"
+                        Command="{Binding SaveCommand}"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        HorizontalAlignment="Right"
+                        Width="200"
+                        Height="45"
+                        FontSize="16"
+                        Margin="0,10,0,20"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Views/SettingsView.xaml
+============================================================================= -->

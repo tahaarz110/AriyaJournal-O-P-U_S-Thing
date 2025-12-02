@@ -1,0 +1,314 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Views/FieldEditorView.xaml
+توضیح: پنل GUI برای مدیریت و سفارشی‌سازی فیلدها
+============================================================================= -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Views.FieldEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             Background="{DynamicResource BackgroundBrush}"
+             d:DesignHeight="600" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- هدر -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🔧 مدیریت فیلدها"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource ForegroundBrush}"/>
+            <TextBlock Text="در این بخش می‌توانید فیلدهای فرم را مدیریت و سفارشی‌سازی کنید"
+                       FontSize="13"
+                       Foreground="{DynamicResource SecondaryForegroundBrush}"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- انتخاب فرم -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="فرم:"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource ForegroundBrush}"
+                           Margin="0,0,10,0"/>
+                <ComboBox ItemsSource="{Binding AvailableForms}"
+                          SelectedItem="{Binding SelectedForm}"
+                          DisplayMemberPath="TitleFa"
+                          Width="250"
+                          Style="{DynamicResource ComboBoxStyle}"/>
+                <Button Content="🔄 بارگذاری مجدد"
+                        Command="{Binding RefreshCommand}"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        Margin="15,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- لیست فیلدها -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="8"
+                Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- نوار ابزار -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button Content="➕ فیلد جدید"
+                            Command="{Binding AddFieldCommand}"
+                            Style="{DynamicResource PrimaryButtonStyle}"
+                            Margin="0,0,10,0"/>
+                    <Button Content="📋 فیلدهای پیش‌فرض"
+                            Command="{Binding ShowDefaultFieldsCommand}"
+                            Style="{DynamicResource SecondaryButtonStyle}"
+                            Margin="0,0,10,0"/>
+                    <Button Content="↩️ بازنشانی"
+                            Command="{Binding ResetCommand}"
+                            Style="{DynamicResource SecondaryButtonStyle}"/>
+                </StackPanel>
+
+                <!-- لیست -->
+                <ListView Grid.Row="1"
+                          ItemsSource="{Binding Fields}"
+                          SelectedItem="{Binding SelectedField}"
+                          Background="Transparent"
+                          BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="50">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Visible}"
+                                                  ToolTip="نمایش/مخفی"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="نام فیلد" Width="150">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding LabelFa}"
+                                                   Foreground="{DynamicResource ForegroundBrush}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="نوع" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TypeDisplay}"
+                                                   Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="الزامی" Width="60">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Required}"
+                                                  IsEnabled="{Binding CanEdit}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="ترتیب" Width="70">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="▲"
+                                                    Command="{Binding DataContext.MoveUpCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButtonStyle}"
+                                                    Width="24" Height="24"/>
+                                            <Button Content="▼"
+                                                    Command="{Binding DataContext.MoveDownCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButtonStyle}"
+                                                    Width="24" Height="24"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn Header="عملیات" Width="100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="✏️"
+                                                    Command="{Binding DataContext.EditFieldCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButtonStyle}"
+                                                    ToolTip="ویرایش"
+                                                    Width="28" Height="28"/>
+                                            <Button Content="🗑️"
+                                                    Command="{Binding DataContext.DeleteFieldCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource IconButtonStyle}"
+                                                    ToolTip="حذف"
+                                                    Width="28" Height="28"
+                                                    Visibility="{Binding IsCustom, Converter={StaticResource BoolToVis}}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Border>
+
+        <!-- دکمه‌های پایین -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="0,15,0,0">
+            <Button Content="💾 ذخیره تغییرات"
+                    Command="{Binding SaveCommand}"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Width="150"
+                    Margin="0,0,10,0"/>
+            <Button Content="انصراف"
+                    Command="{Binding CancelCommand}"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Width="100"/>
+        </StackPanel>
+
+        <!-- پنل ویرایش فیلد -->
+        <Border Grid.Row="0" Grid.RowSpan="4"
+                Background="#80000000"
+                Visibility="{Binding IsEditPanelVisible, Converter={StaticResource BoolToVis}}">
+            <Border Background="{DynamicResource CardBackgroundBrush}"
+                    CornerRadius="10"
+                    Padding="25"
+                    MaxWidth="500"
+                    MaxHeight="600"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding EditPanelTitle}"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource ForegroundBrush}"
+                               Margin="0,0,0,20"/>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <!-- نام فیلد -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="نام نمایشی *"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding EditingField.LabelFa, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{DynamicResource TextBoxStyle}"/>
+                            </StackPanel>
+
+                            <!-- شناسه فیلد -->
+                            <StackPanel Margin="0,0,0,15"
+                                        Visibility="{Binding EditingField.IsCustom, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="شناسه فیلد * (انگلیسی)"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding EditingField.FieldName, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{DynamicResource TextBoxStyle}"
+                                         IsEnabled="{Binding EditingField.IsNew}"/>
+                            </StackPanel>
+
+                            <!-- نوع فیلد -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="نوع فیلد"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <ComboBox ItemsSource="{Binding FieldTypes}"
+                                          SelectedItem="{Binding EditingField.FieldType}"
+                                          DisplayMemberPath="DisplayName"
+                                          SelectedValuePath="Value"
+                                          Style="{DynamicResource ComboBoxStyle}"
+                                          IsEnabled="{Binding EditingField.IsCustom}"/>
+                            </StackPanel>
+
+                            <!-- گزینه‌ها (برای select) -->
+                            <StackPanel Margin="0,0,0,15"
+                                        Visibility="{Binding EditingField.ShowOptions, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="گزینه‌ها (هر خط یک گزینه)"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding EditingField.OptionsText, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{DynamicResource TextBoxStyle}"
+                                         AcceptsReturn="True"
+                                         Height="100"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto"/>
+                            </StackPanel>
+
+                            <!-- مقدار پیش‌فرض -->
+                            <StackPanel Margin="0,0,0,15">
+                                <TextBlock Text="مقدار پیش‌فرض"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           Margin="0,0,0,5"/>
+                                <TextBox Text="{Binding EditingField.DefaultValue, UpdateSourceTrigger=PropertyChanged}"
+                                         Style="{DynamicResource TextBoxStyle}"/>
+                            </StackPanel>
+
+                            <!-- تنظیمات -->
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                <CheckBox Content="الزامی"
+                                          IsChecked="{Binding EditingField.Required}"
+                                          Foreground="{DynamicResource ForegroundBrush}"
+                                          Margin="0,0,20,0"/>
+                                <CheckBox Content="نمایش"
+                                          IsChecked="{Binding EditingField.Visible}"
+                                          Foreground="{DynamicResource ForegroundBrush}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- دکمه‌ها -->
+                    <StackPanel Grid.Row="2"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                Margin="0,20,0,0">
+                        <Button Content="✔️ تأیید"
+                                Command="{Binding ConfirmEditCommand}"
+                                Style="{DynamicResource PrimaryButtonStyle}"
+                                Width="100"
+                                Margin="0,0,10,0"/>
+                        <Button Content="انصراف"
+                                Command="{Binding CancelEditCommand}"
+                                Style="{DynamicResource SecondaryButtonStyle}"
+                                Width="100"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Views/FieldEditorView.xaml
+============================================================================= -->

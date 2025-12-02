@@ -1,0 +1,52 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Resources/LightTheme.xaml
+توضیح: تم روشن - کاملاً اصلاح‌شده برای خوانایی بهتر
+============================================================================= -->
+
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ========== رنگ‌های اصلی ========== -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="#2563EB"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#1D4ED8"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="#1E40AF"/>
+
+    <!-- ========== رنگ‌های ثانویه ========== -->
+    <SolidColorBrush x:Key="SecondaryBrush" Color="#E2E8F0"/>
+    <SolidColorBrush x:Key="SecondaryHoverBrush" Color="#CBD5E1"/>
+
+    <!-- ========== رنگ‌های خطر ========== -->
+    <SolidColorBrush x:Key="DangerBrush" Color="#DC2626"/>
+    <SolidColorBrush x:Key="DangerHoverBrush" Color="#B91C1C"/>
+
+    <!-- ========== رنگ‌های موفقیت ========== -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="#16A34A"/>
+
+    <!-- ========== رنگ‌های هشدار ========== -->
+    <SolidColorBrush x:Key="WarningBrush" Color="#D97706"/>
+
+    <!-- ========== پس‌زمینه‌ها - رنگ‌های روشن ========== -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#E2E8F0"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#F8FAFC"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#FFFFFF"/>
+
+    <!-- ========== متن - رنگ‌های تیره برای خوانایی ========== -->
+    <SolidColorBrush x:Key="ForegroundBrush" Color="#1E293B"/>
+    <SolidColorBrush x:Key="SecondaryForegroundBrush" Color="#64748B"/>
+
+    <!-- ========== خطوط و حاشیه‌ها ========== -->
+    <SolidColorBrush x:Key="BorderBrush" Color="#CBD5E1"/>
+    <SolidColorBrush x:Key="HoverBrush" Color="#E2E8F0"/>
+    <SolidColorBrush x:Key="AlternateRowBrush" Color="#F8FAFC"/>
+
+    <!-- ========== غیرفعال ========== -->
+    <SolidColorBrush x:Key="DisabledBrush" Color="#94A3B8"/>
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#94A3B8"/>
+
+</ResourceDictionary>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Resources/LightTheme.xaml
+============================================================================= -->

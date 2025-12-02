@@ -1,0 +1,198 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Controls/DynamicWidget.xaml
+شماره فایل: 11
+توضیح: کنترل ویجت داینامیک برای داشبورد Meta-driven
+============================================================================= -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Controls.DynamicWidget"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FlowDirection="RightToLeft">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <Border x:Name="WidgetBorder"
+            Background="{DynamicResource CardBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="0"
+            Margin="5">
+        
+        <Border.Effect>
+            <DropShadowEffect ShadowDepth="2" 
+                              BlurRadius="8" 
+                              Opacity="0.1"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- هدر ویجت -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource WidgetHeaderBrush}"
+                    CornerRadius="8,8,0,0"
+                    Padding="15,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- آیکون -->
+                    <TextBlock x:Name="WidgetIcon"
+                               Grid.Column="0"
+                               Text="📊"
+                               FontSize="18"
+                               VerticalAlignment="Center"
+                               Margin="0,0,10,0"/>
+
+                    <!-- عنوان -->
+                    <TextBlock x:Name="WidgetTitle"
+                               Grid.Column="1"
+                               Text="عنوان ویجت"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource ForegroundBrush}"
+                               VerticalAlignment="Center"/>
+
+                    <!-- دکمه‌های عملیات -->
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal">
+                        
+                        <!-- بروزرسانی -->
+                        <Button x:Name="RefreshButton"
+                                Content="🔄"
+                                ToolTip="بروزرسانی"
+                                Style="{DynamicResource IconButtonStyle}"
+                                Click="RefreshButton_Click"
+                                Margin="0,0,5,0"/>
+
+                        <!-- تنظیمات -->
+                        <Button x:Name="SettingsButton"
+                                Content="⚙️"
+                                ToolTip="تنظیمات"
+                                Style="{DynamicResource IconButtonStyle}"
+                                Click="SettingsButton_Click"
+                                Visibility="{Binding ShowSettings, Converter={StaticResource BoolToVis}}"/>
+
+                        <!-- حذف -->
+                        <Button x:Name="RemoveButton"
+                                Content="✕"
+                                ToolTip="حذف ویجت"
+                                Style="{DynamicResource IconButtonStyle}"
+                                Click="RemoveButton_Click"
+                                Visibility="{Binding CanRemove, Converter={StaticResource BoolToVis}}"
+                                Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- محتوای ویجت -->
+            <Border Grid.Row="1"
+                    Padding="15">
+                <Grid>
+                    <!-- محتوای اصلی -->
+                    <ContentControl x:Name="WidgetContent"/>
+
+                    <!-- لودینگ -->
+                    <Border x:Name="LoadingOverlay"
+                            Background="#80FFFFFF"
+                            Visibility="Collapsed">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <ProgressBar IsIndeterminate="True"
+                                         Width="100"
+                                         Height="4"/>
+                            <TextBlock Text="در حال بارگذاری..."
+                                       HorizontalAlignment="Center"
+                                       Margin="0,10,0,0"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- خطا -->
+                    <Border x:Name="ErrorOverlay"
+                            Background="#FFFCE4EC"
+                            CornerRadius="5"
+                            Padding="15"
+                            Visibility="Collapsed">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <TextBlock Text="⚠️"
+                                       FontSize="32"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="ErrorMessage"
+                                       Text="خطا در بارگذاری داده‌ها"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,10,0,0"
+                                       Foreground="#C62828"
+                                       TextWrapping="Wrap"/>
+                            <Button Content="تلاش مجدد"
+                                    Click="RefreshButton_Click"
+                                    Style="{DynamicResource SecondaryButtonStyle}"
+                                    Margin="0,15,0,0"
+                                    Padding="20,8"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- بدون داده -->
+                    <Border x:Name="NoDataOverlay"
+                            Visibility="Collapsed">
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center">
+                            <TextBlock Text="📭"
+                                       FontSize="32"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="داده‌ای برای نمایش وجود ندارد"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,10,0,0"
+                                       Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- فوتر ویجت (اختیاری) -->
+            <Border x:Name="WidgetFooter"
+                    Grid.Row="2"
+                    Background="{DynamicResource WidgetFooterBrush}"
+                    CornerRadius="0,0,8,8"
+                    Padding="15,8"
+                    Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- اطلاعات اضافی -->
+                    <TextBlock x:Name="FooterInfo"
+                               Grid.Column="0"
+                               FontSize="11"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               VerticalAlignment="Center"/>
+
+                    <!-- آخرین بروزرسانی -->
+                    <TextBlock x:Name="LastUpdateText"
+                               Grid.Column="1"
+                               FontSize="11"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Controls/DynamicWidget.xaml
+============================================================================= -->

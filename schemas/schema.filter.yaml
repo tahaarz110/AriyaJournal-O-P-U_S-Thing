@@ -1,0 +1,145 @@
+# =============================================================================
+# فایل: schemas/schema.filter.yaml
+# شماره فایل: 25
+# توضیح: Schema فیلترهای معاملات
+# =============================================================================
+
+id: tradeFilters
+titleFa: فیلتر معاملات
+targetDataSource: trades
+allowSavePreset: true
+
+fields:
+  # فیلترهای سریع
+  - id: symbol
+    labelFa: نماد
+    bindingPath: Symbol
+    type: Text
+    isQuickFilter: true
+    order: 1
+    
+  - id: direction
+    labelFa: جهت
+    bindingPath: Direction
+    type: Select
+    isQuickFilter: true
+    order: 2
+    options:
+      - { value: '', labelFa: 'همه' }
+      - { value: '1', labelFa: '▲ خرید' }
+      - { value: '2', labelFa: '▼ فروش' }
+      
+  - id: isClosed
+    labelFa: وضعیت
+    bindingPath: IsClosed
+    type: Select
+    isQuickFilter: true
+    order: 3
+    options:
+      - { value: '', labelFa: 'همه' }
+      - { value: 'true', labelFa: 'بسته' }
+      - { value: 'false', labelFa: 'باز' }
+      
+  # فیلترهای تاریخ
+  - id: dateRange
+    labelFa: بازه تاریخ
+    bindingPath: EntryTime
+    type: DateRange
+    isQuickFilter: false
+    order: 10
+    
+  # فیلترهای عددی
+  - id: profitLossRange
+    labelFa: محدوده سود/زیان
+    bindingPath: ProfitLoss
+    type: NumberRange
+    isQuickFilter: false
+    order: 20
+    
+  - id: volumeRange
+    labelFa: محدوده حجم
+    bindingPath: Volume
+    type: NumberRange
+    isQuickFilter: false
+    order: 21
+    
+  # فیلترهای منطقی
+  - id: followedPlan
+    labelFa: طبق پلن
+    bindingPath: FollowedPlan
+    type: Boolean
+    isQuickFilter: false
+    order: 30
+    
+  - id: isImpulsive
+    labelFa: هیجانی
+    bindingPath: IsImpulsive
+    type: Boolean
+    isQuickFilter: false
+    order: 31
+
+# پریست‌های پیش‌فرض
+presets:
+  - id: winners
+    titleFa: معاملات برنده
+    icon: 🏆
+    isBuiltIn: true
+    values:
+      profitLoss: { operator: 'GreaterThan', value: 0 }
+      isClosed: true
+      
+  - id: losers
+    titleFa: معاملات بازنده
+    icon: 📉
+    isBuiltIn: true
+    values:
+      profitLoss: { operator: 'LessThan', value: 0 }
+      isClosed: true
+      
+  - id: openTrades
+    titleFa: معاملات باز
+    icon: 🔓
+    isBuiltIn: true
+    values:
+      isClosed: false
+      
+  - id: today
+    titleFa: امروز
+    icon: 📅
+    isBuiltIn: true
+    values:
+      dateRange: { type: 'today' }
+      
+  - id: thisWeek
+    titleFa: این هفته
+    icon: 📆
+    isBuiltIn: true
+    values:
+      dateRange: { type: 'thisWeek' }
+      
+  - id: thisMonth
+    titleFa: این ماه
+    icon: 🗓️
+    isBuiltIn: true
+    values:
+      dateRange: { type: 'thisMonth' }
+      
+  - id: impulsiveTrades
+    titleFa: معاملات هیجانی
+    icon: ⚡
+    isBuiltIn: true
+    values:
+      isImpulsive: true
+      
+  - id: plannedWinners
+    titleFa: برد طبق پلن
+    icon: ✅
+    isBuiltIn: true
+    values:
+      profitLoss: { operator: 'GreaterThan', value: 0 }
+      followedPlan: true
+      isClosed: true
+
+# =============================================================================
+# پایان فایل: schemas/schema.filter.yaml
+# =============================================================================

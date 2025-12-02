@@ -1,0 +1,147 @@
+# =============================================================================
+# فایل: schemas/schema.widgets.yaml
+# شماره فایل: 23
+# توضیح: تعریف ویجت‌های داشبورد
+# =============================================================================
+
+widgets:
+  # ویجت تعداد معاملات
+  - id: totalTrades
+    titleFa: تعداد معاملات
+    icon: 📊
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.count
+    refreshInterval: 60
+    settings:
+      format: N0
+      subtitle: معامله
+      
+  # ویجت نرخ برد
+  - id: winRate
+    titleFa: نرخ برد
+    icon: 🎯
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.winRate
+    refreshInterval: 60
+    settings:
+      format: P1
+      colorCondition: '>50:green,<40:red,default:orange'
+      
+  # ویجت سود/زیان کل
+  - id: totalProfitLoss
+    titleFa: سود/زیان کل
+    icon: 💰
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.totalPL
+    refreshInterval: 60
+    settings:
+      format: C2
+      colorCondition: '>0:green,<0:red,default:gray'
+      
+  # ویجت منحنی Equity
+  - id: equityCurve
+    titleFa: منحنی Equity
+    icon: 📈
+    type: Chart
+    minWidth: 300
+    minHeight: 200
+    dataSource: trades.equityCurve
+    refreshInterval: 300
+    showFooter: true
+    settings:
+      chartType: line
+      showGrid: true
+      showLegend: false
+      lineColor: '#007ACC'
+      fillArea: true
+      fillOpacity: 0.2
+      
+  # ویجت توزیع برد/باخت
+  - id: winLossDistribution
+    titleFa: توزیع برد/باخت
+    icon: 🥧
+    type: Chart
+    minWidth: 150
+    minHeight: 150
+    dataSource: trades.winLossDistribution
+    refreshInterval: 300
+    settings:
+      chartType: pie
+      colors: ['#4CAF50', '#F44336', '#9E9E9E']
+      labels: ['برد', 'باخت', 'بدون سود و زیان']
+      
+  # ویجت معاملات اخیر
+  - id: recentTrades
+    titleFa: معاملات اخیر
+    icon: 📋
+    type: List
+    minWidth: 200
+    minHeight: 150
+    dataSource: trades.recent
+    refreshInterval: 60
+    settings:
+      limit: 5
+      showTime: true
+      showPL: true
+      
+  # ویجت بهترین نمادها
+  - id: topSymbols
+    titleFa: بهترین نمادها
+    icon: ⭐
+    type: List
+    minWidth: 200
+    minHeight: 150
+    dataSource: trades.topSymbols
+    refreshInterval: 300
+    settings:
+      limit: 5
+      sortBy: profitLoss
+      
+  # ویجت آمار روزانه
+  - id: dailyStats
+    titleFa: آمار امروز
+    icon: 📅
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.today
+    refreshInterval: 60
+    settings:
+      showCount: true
+      showPL: true
+      
+  # ویجت Drawdown
+  - id: drawdown
+    titleFa: حداکثر افت سرمایه
+    icon: 📉
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.maxDrawdown
+    refreshInterval: 300
+    settings:
+      format: P2
+      colorCondition: '<10:green,<20:orange,default:red'
+      
+  # ویجت R:R میانگین
+  - id: averageRR
+    titleFa: نسبت ریسک به ریوارد
+    icon: ⚖️
+    type: Value
+    minWidth: 150
+    minHeight: 100
+    dataSource: trades.averageRR
+    refreshInterval: 300
+    settings:
+      format: 'N2'
+      prefix: '1:'
+
+# =============================================================================
+# پایان فایل: schemas/schema.widgets.yaml
+# =============================================================================

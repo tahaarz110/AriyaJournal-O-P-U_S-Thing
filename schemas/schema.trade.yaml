@@ -1,0 +1,182 @@
+# =============================================================================
+# فایل: schemas/schema.trade.yaml
+# شماره فایل: 109
+# توضیح: Schema فرم معامله
+# =============================================================================
+
+module: Trade
+version: '1.0'
+
+forms:
+  - id: tradeEntry
+    titleFa: ثبت معامله جدید
+    direction: rtl
+    
+    sections:
+      - id: basic
+        titleFa: اطلاعات پایه
+        columns: 2
+        fields:
+          - id: symbol
+            labelFa: نماد
+            type: text
+            required: true
+            placeholder: مثال: XAUUSD
+            validation:
+              minLength: 1
+              maxLength: 20
+          
+          - id: direction
+            labelFa: جهت
+            type: select
+            required: true
+            options:
+              - { value: '1', labelFa: '▲ خرید (Buy)' }
+              - { value: '2', labelFa: '▼ فروش (Sell)' }
+          
+          - id: volume
+            labelFa: حجم (لات)
+            type: decimal
+            required: true
+            defaultValue: '0.01'
+            validation:
+              min: 0.01
+              max: 100
+              messageFa: حجم باید بین ۰.۰۱ تا ۱۰۰ لات باشد
+          
+          - id: entryPrice
+            labelFa: قیمت ورود
+            type: decimal
+            required: true
+            validation:
+              min: 0
+          
+          - id: entryTime
+            labelFa: زمان ورود
+            type: datetime
+            required: true
+      
+      - id: levels
+        titleFa: سطوح قیمتی
+        columns: 2
+        fields:
+          - id: stopLoss
+            labelFa: حد ضرر (SL)
+            type: decimal
+            helpText: سطح قیمتی برای خروج با ضرر
+          
+          - id: takeProfit
+            labelFa: حد سود (TP)
+            type: decimal
+            helpText: سطح قیمتی برای خروج با سود
+          
+          - id: exitPrice
+            labelFa: قیمت خروج
+            type: decimal
+          
+          - id: exitTime
+            labelFa: زمان خروج
+            type: datetime
+      
+      - id: costs
+        titleFa: هزینه‌ها
+        columns: 3
+        fields:
+          - id: commission
+            labelFa: کمیسیون
+            type: decimal
+            defaultValue: '0'
+          
+          - id: swap
+            labelFa: سواپ
+            type: decimal
+            defaultValue: '0'
+          
+          - id: profitLoss
+            labelFa: سود/زیان
+            type: decimal
+            readOnly: true
+      
+      - id: notes
+        titleFa: یادداشت‌ها
+        collapsed: false
+        fields:
+          - id: entryReason
+            labelFa: دلیل ورود
+            type: textarea
+            placeholder: چرا وارد این معامله شدید؟
+          
+          - id: preTradeNotes
+            labelFa: یادداشت قبل از معامله
+            type: textarea
+          
+          - id: postTradeNotes
+            labelFa: یادداشت بعد از معامله
+            type: textarea
+          
+          - id: mistakes
+            labelFa: اشتباهات
+            type: textarea
+            placeholder: چه اشتباهاتی در این معامله داشتید؟
+          
+          - id: lessons
+            labelFa: درس‌های آموخته شده
+            type: textarea
+      
+      - id: evaluation
+        titleFa: ارزیابی
+        columns: 3
+        fields:
+          - id: executionRating
+            labelFa: امتیاز اجرا
+            type: rating
+          
+          - id: followedPlan
+            labelFa: طبق پلن بود
+            type: boolean
+          
+          - id: isImpulsive
+            labelFa: ورود هیجانی
+            type: boolean
+    
+    actions:
+      - { id: save, labelFa: ذخیره, style: primary }
+      - { id: saveAndNew, labelFa: ذخیره و جدید }
+      - { id: cancel, labelFa: انصراف }
+    
+    rules:
+      # اعتبارسنجی حد ضرر برای خرید
+      - id: validateBuySL
+        trigger: OnSave
+        condition: 'direction == 1 AND stopLoss != null AND stopLoss >= entryPrice'
+        action: Validate
+        target: stopLoss
+        value: حد ضرر خرید باید کمتر از قیمت ورود باشد
+      
+      # اعتبارسنجی حد ضرر برای فروش
+      - id: validateSellSL
+        trigger: OnSave
+        condition: 'direction == 2 AND stopLoss != null AND stopLoss <= entryPrice'
+        action: Validate
+        target: stopLoss
+        value: حد ضرر فروش باید بیشتر از قیمت ورود باشد
+      
+      # اعتبارسنجی حد سود برای خرید
+      - id: validateBuyTP
+        trigger: OnSave
+        condition: 'direction == 1 AND takeProfit != null AND takeProfit <= entryPrice'
+        action: Validate
+        target: takeProfit
+        value: حد سود خرید باید بیشتر از قیمت ورود باشد
+      
+      # اعتبارسنجی حد سود برای فروش
+      - id: validateSellTP
+        trigger: OnSave
+        condition: 'direction == 2 AND takeProfit != null AND takeProfit >= entryPrice'
+        action: Validate
+        target: takeProfit
+        value: حد سود فروش باید کمتر از قیمت ورود باشد
+
+# =============================================================================
+# پایان فایل: schemas/schema.trade.yaml
+# =============================================================================

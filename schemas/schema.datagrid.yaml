@@ -1,0 +1,180 @@
+# =============================================================================
+# فایل: schemas/schema.datagrid.yaml
+# شماره فایل: 24
+# توضیح: Schema گرید لیست معاملات
+# =============================================================================
+
+id: tradeListGrid
+titleFa: لیست معاملات
+version: '1.0'
+dataSource: trades
+allowSort: true
+allowFilter: true
+allowPaging: true
+pageSize: 50
+allowSelection: true
+selectionMode: Single
+allowExport: true
+showRowNumbers: true
+defaultSortColumn: entryTime
+defaultSortAscending: false
+
+columns:
+  - id: rowNumber
+    headerFa: '#'
+    type: Text
+    width: 50
+    visible: true
+    sortable: false
+    filterable: false
+    alignment: Center
+    order: 0
+    
+  - id: symbol
+    headerFa: نماد
+    bindingPath: Symbol
+    type: Text
+    width: 100
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Right
+    order: 1
+    
+  - id: direction
+    headerFa: جهت
+    bindingPath: Direction
+    type: Badge
+    width: 80
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Center
+    order: 2
+    format: '{value == 1 ? "▲ خرید" : "▼ فروش"}'
+    foregroundBinding: '{value == 1 ? "Green" : "Red"}'
+    
+  - id: volume
+    headerFa: حجم
+    bindingPath: Volume
+    type: Decimal
+    width: 80
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 3
+    format: 'N2'
+    
+  - id: entryPrice
+    headerFa: قیمت ورود
+    bindingPath: EntryPrice
+    type: Decimal
+    width: 100
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 4
+    format: 'N5'
+    
+  - id: exitPrice
+    headerFa: قیمت خروج
+    bindingPath: ExitPrice
+    type: Decimal
+    width: 100
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 5
+    format: 'N5'
+    
+  - id: stopLoss
+    headerFa: حد ضرر
+    bindingPath: StopLoss
+    type: Decimal
+    width: 100
+    visible: true
+    sortable: true
+    filterable: false
+    alignment: Left
+    order: 6
+    format: 'N5'
+    
+  - id: takeProfit
+    headerFa: حد سود
+    bindingPath: TakeProfit
+    type: Decimal
+    width: 100
+    visible: true
+    sortable: true
+    filterable: false
+    alignment: Left
+    order: 7
+    format: 'N5'
+    
+  - id: profitLoss
+    headerFa: سود/زیان
+    bindingPath: ProfitLoss
+    type: Currency
+    width: 100
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 8
+    format: 'N2'
+    foregroundBinding: '{value > 0 ? "Green" : value < 0 ? "Red" : "Gray"}'
+    
+  - id: entryTime
+    headerFa: زمان ورود
+    bindingPath: EntryTime
+    type: DateTime
+    width: 140
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 9
+    format: 'yyyy/MM/dd HH:mm'
+    
+  - id: exitTime
+    headerFa: زمان خروج
+    bindingPath: ExitTime
+    type: DateTime
+    width: 140
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Left
+    order: 10
+    format: 'yyyy/MM/dd HH:mm'
+    
+  - id: isClosed
+    headerFa: وضعیت
+    bindingPath: IsClosed
+    type: Badge
+    width: 80
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Center
+    order: 11
+    format: '{value ? "بسته" : "باز"}'
+    foregroundBinding: '{value ? "Gray" : "Blue"}'
+    
+  - id: followedPlan
+    headerFa: طبق پلن
+    bindingPath: FollowedPlan
+    type: Boolean
+    width: 80
+    visible: true
+    sortable: true
+    filterable: true
+    alignment: Center
+    order: 12
+
+# =============================================================================
+# پایان فایل: schemas/schema.datagrid.yaml
+# =============================================================================

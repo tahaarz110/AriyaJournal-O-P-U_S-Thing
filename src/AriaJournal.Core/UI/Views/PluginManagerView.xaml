@@ -1,0 +1,213 @@
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- فایل: PluginManagerView.xaml -->
+<!-- مسیر: src/AriaJournal.Core/UI/Views/PluginManagerView.xaml -->
+<!-- توضیح: صفحه مدیریت پلاگین‌ها -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Views.PluginManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             FlowDirection="RightToLeft"
+             Background="{DynamicResource BackgroundBrush}">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- هدر -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🔌 مدیریت پلاگین‌ها" 
+                       FontSize="24" 
+                       FontWeight="Bold"/>
+            <TextBlock Text="پلاگین‌های نصب‌شده را مدیریت کنید"
+                       Foreground="Gray"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- نوار ابزار -->
+        <Border Grid.Row="1" 
+                Background="{DynamicResource CardBrush}"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- جستجو -->
+                <TextBox Grid.Column="0"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{DynamicResource ModernTextBox}"
+                         Padding="10"
+                         Margin="0,0,15,0">
+                    <TextBox.Resources>
+                        <VisualBrush x:Key="HintBrush" TileMode="None" Stretch="None" AlignmentX="Right">
+                            <VisualBrush.Visual>
+                                <TextBlock Text="🔍 جستجوی پلاگین..." Foreground="Gray"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <!-- دکمه‌ها -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="📂 نصب پلاگین جدید"
+                            Command="{Binding InstallPluginCommand}"
+                            Style="{DynamicResource PrimaryButton}"
+                            Margin="0,0,10,0"/>
+                    <Button Content="🔄 بروزرسانی"
+                            Command="{Binding RefreshCommand}"
+                            Style="{DynamicResource SecondaryButton}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- لیست پلاگین‌ها -->
+        <Border Grid.Row="2" 
+                Background="{DynamicResource CardBrush}"
+                CornerRadius="8">
+            <Grid>
+                <!-- Empty State -->
+                <StackPanel HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="📦" FontSize="64" HorizontalAlignment="Center"/>
+                    <TextBlock Text="پلاگینی نصب نشده است" 
+                               FontSize="18"
+                               Foreground="Gray"
+                               HorizontalAlignment="Center"
+                               Margin="0,15,0,0"/>
+                    <TextBlock Text="برای افزودن قابلیت‌های جدید، پلاگین نصب کنید"
+                               Foreground="Gray"
+                               HorizontalAlignment="Center"
+                               Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- لیست -->
+                <ListView ItemsSource="{Binding Plugins}"
+                          SelectedItem="{Binding SelectedPlugin}"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          Visibility="{Binding HasPlugins, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource BackgroundBrush}"
+                                    CornerRadius="8"
+                                    Padding="15"
+                                    Margin="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- آیکون -->
+                                    <Border Grid.Column="0"
+                                            Width="40" Height="40"
+                                            CornerRadius="8"
+                                            Background="{DynamicResource PrimaryBrush}">
+                                        <TextBlock Text="{Binding Icon}"
+                                                   FontSize="20"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <!-- اطلاعات -->
+                                    <StackPanel Grid.Column="1" Margin="15,0">
+                                        <TextBlock Text="{Binding Name}" 
+                                                   FontWeight="Bold"
+                                                   FontSize="14"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   Foreground="Gray"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   MaxWidth="400"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                            <TextBlock Text="نسخه:" Foreground="Gray" FontSize="11"/>
+                                            <TextBlock Text="{Binding Version}" 
+                                                       Foreground="Gray" 
+                                                       FontSize="11"
+                                                       Margin="5,0,15,0"/>
+                                            <TextBlock Text="نویسنده:" Foreground="Gray" FontSize="11"/>
+                                            <TextBlock Text="{Binding Author}" 
+                                                       Foreground="Gray" 
+                                                       FontSize="11"
+                                                       Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!-- دکمه‌ها -->
+                                    <StackPanel Grid.Column="2" 
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center">
+                                        <!-- Toggle فعال/غیرفعال -->
+                                        <ToggleButton IsChecked="{Binding IsEnabled}"
+                                                      Command="{Binding DataContext.TogglePluginCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                      CommandParameter="{Binding}"
+                                                      Style="{DynamicResource ToggleSwitch}"
+                                                      Margin="0,0,10,0"/>
+                                        
+                                        <!-- تنظیمات -->
+                                        <Button Content="⚙️"
+                                                Command="{Binding DataContext.OpenPluginSettingsCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource IconButton}"
+                                                ToolTip="تنظیمات"
+                                                Visibility="{Binding HasSettings, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                Margin="0,0,5,0"/>
+                                        
+                                        <!-- حذف -->
+                                        <Button Content="🗑️"
+                                                Command="{Binding DataContext.UninstallPluginCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource DangerIconButton}"
+                                                ToolTip="حذف پلاگین"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+
+        <!-- اطلاعات پایین -->
+        <Border Grid.Row="3" 
+                Background="{DynamicResource CardBrush}"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,15,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="📁 پوشه پلاگین‌ها:" Foreground="Gray"/>
+                    <TextBlock Text="{Binding PluginFolder}" 
+                               Margin="10,0,0,0"
+                               Foreground="Gray"/>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="📂 باز کردن پوشه"
+                        Command="{Binding OpenPluginFolderCommand}"
+                        Style="{DynamicResource LinkButton}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- پایان فایل: PluginManagerView.xaml -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->

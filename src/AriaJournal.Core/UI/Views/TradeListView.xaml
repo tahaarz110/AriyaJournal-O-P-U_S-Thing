@@ -1,0 +1,298 @@
+<!-- =============================================================================
+فایل: src/AriaJournal.Core/UI/Views/TradeListView.xaml
+شماره فایل: 82
+توضیح: صفحه لیست معاملات
+============================================================================= -->
+
+<UserControl x:Class="AriaJournal.Core.UI.Views.TradeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FlowDirection="RightToLeft"
+             Background="{DynamicResource BackgroundBrush}">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- هدر -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="📊 معاملات"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource ForegroundBrush}"/>
+                <TextBlock Text="{Binding SummaryText}"
+                           FontSize="13"
+                           Foreground="{DynamicResource SecondaryForegroundBrush}"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="🔄 بروزرسانی"
+                        Command="{Binding RefreshCommand}"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        Margin="0,0,10,0"/>
+                <Button Content="➕ معامله جدید"
+                        Command="{Binding NewTradeCommand}"
+                        Style="{DynamicResource PrimaryButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- فیلترها -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="8"
+                Padding="15"
+                Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- جستجو -->
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="جستجو" FontSize="12"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               Margin="0,0,0,5"/>
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{DynamicResource TextBoxStyle}"/>
+                </StackPanel>
+
+                <!-- نماد -->
+                <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                    <TextBlock Text="نماد" FontSize="12"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               Margin="0,0,0,5"/>
+                    <ComboBox ItemsSource="{Binding Symbols}"
+                              SelectedItem="{Binding SelectedSymbol}"
+                              Style="{DynamicResource ComboBoxStyle}"/>
+                </StackPanel>
+
+                <!-- از تاریخ -->
+                <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                    <TextBlock Text="از تاریخ" FontSize="12"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               Margin="0,0,0,5"/>
+                    <DatePicker SelectedDate="{Binding FromDate}"
+                                Style="{DynamicResource DatePickerStyle}"/>
+                </StackPanel>
+
+                <!-- تا تاریخ -->
+                <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                    <TextBlock Text="تا تاریخ" FontSize="12"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               Margin="0,0,0,5"/>
+                    <DatePicker SelectedDate="{Binding ToDate}"
+                                Style="{DynamicResource DatePickerStyle}"/>
+                </StackPanel>
+
+                <!-- دکمه‌ها -->
+                <StackPanel Grid.Column="4" 
+                            Orientation="Horizontal"
+                            VerticalAlignment="Bottom">
+                    <Button Content="🔍 فیلتر"
+                            Command="{Binding ApplyFilterCommand}"
+                            Style="{DynamicResource PrimaryButtonStyle}"
+                            Margin="0,0,5,0"/>
+                    <Button Content="پاک کردن"
+                            Command="{Binding ClearFilterCommand}"
+                            Style="{DynamicResource SecondaryButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- جدول معاملات -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource CardBackgroundBrush}"
+                CornerRadius="8">
+            <Grid>
+                <!-- لودینگ -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
+                    <ProgressBar IsIndeterminate="True"
+                                 Width="200"
+                                 Height="4"/>
+                    <TextBlock Text="در حال بارگذاری..."
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <!-- جدول -->
+                <DataGrid ItemsSource="{Binding Trades}"
+                          SelectedItem="{Binding SelectedTrade}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          Style="{DynamicResource DataGridStyle}"
+                          Visibility="{Binding IsNotBusy, Converter={StaticResource BoolToVis}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="نماد" Binding="{Binding Symbol}" Width="100"/>
+                        <DataGridTemplateColumn Header="جهت" Width="70">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding DirectionIcon}"
+                                                   Foreground="{Binding DirectionColor}"/>
+                                        <TextBlock Text="{Binding DirectionDisplay}"
+                                                   Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="حجم" Binding="{Binding Volume, StringFormat=N2}" Width="80"/>
+                        <DataGridTextColumn Header="قیمت ورود" Binding="{Binding EntryPrice, StringFormat=N5}" Width="100"/>
+                        <DataGridTextColumn Header="قیمت خروج" Binding="{Binding ExitPrice, StringFormat=N5}" Width="100"/>
+                        <DataGridTextColumn Header="زمان ورود" Binding="{Binding EntryTime, StringFormat=yyyy/MM/dd HH:mm}" Width="130"/>
+                        <DataGridTemplateColumn Header="سود/زیان" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ProfitLossDisplay}"
+                                               Foreground="{Binding ProfitLossColor}"
+                                               FontWeight="Bold"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="وضعیت" Binding="{Binding StatusDisplay}" Width="70"/>
+                        <DataGridTemplateColumn Header="عملیات" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="✏️"
+                                                Command="{Binding DataContext.EditTradeCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource IconButtonStyle}"
+                                                ToolTip="ویرایش"/>
+                                        <Button Content="🗑️"
+                                                Command="{Binding DataContext.DeleteTradeCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource IconButtonStyle}"
+                                                ToolTip="حذف"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- پیام خالی بودن -->
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="📭"
+                               FontSize="48"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="معامله‌ای یافت نشد"
+                               FontSize="16"
+                               Foreground="{DynamicResource SecondaryForegroundBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- صفحه‌بندی و آمار -->
+        <Grid Grid.Row="3" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- آمار -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="5"
+                        Padding="10,5"
+                        Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="کل:" Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                        <TextBlock Text="{Binding TotalCount}"
+                                   FontWeight="Bold"
+                                   Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#E8F5E9"
+                        CornerRadius="5"
+                        Padding="10,5"
+                        Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="برد:" Foreground="#2E7D32"/>
+                        <TextBlock Text="{Binding WinCount}"
+                                   Foreground="#2E7D32"
+                                   FontWeight="Bold"
+                                   Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="#FFEBEE"
+                        CornerRadius="5"
+                        Padding="10,5"
+                        Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="باخت:" Foreground="#C62828"/>
+                        <TextBlock Text="{Binding LossCount}"
+                                   Foreground="#C62828"
+                                   FontWeight="Bold"
+                                   Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        CornerRadius="5"
+                        Padding="10,5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="نرخ برد:"
+                                   Foreground="{DynamicResource SecondaryForegroundBrush}"/>
+                        <TextBlock Text="{Binding WinRate, StringFormat={}{0:N1}%}"
+                                   FontWeight="Bold"
+                                   Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- صفحه‌بندی -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="◀"
+                        Command="{Binding PreviousPageCommand}"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        Width="40"
+                        IsEnabled="{Binding HasPreviousPage}"/>
+                <TextBlock VerticalAlignment="Center"
+                           Margin="10,0">
+                    <Run Text="صفحه"/>
+                    <Run Text="{Binding CurrentPage}"/>
+                    <Run Text="از"/>
+                    <Run Text="{Binding TotalPages}"/>
+                </TextBlock>
+                <Button Content="▶"
+                        Command="{Binding NextPageCommand}"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        Width="40"
+                        IsEnabled="{Binding HasNextPage}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
+
+<!-- =============================================================================
+پایان فایل: src/AriaJournal.Core/UI/Views/TradeListView.xaml
+============================================================================= -->

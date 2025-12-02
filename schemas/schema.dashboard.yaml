@@ -1,0 +1,70 @@
+# =============================================================================
+# فایل: schemas/schema.dashboard.yaml
+# شماره فایل: 22
+# توضیح: Schema داشبورد پیش‌فرض
+# =============================================================================
+
+id: defaultDashboard
+titleFa: داشبورد اصلی
+version: '1.0'
+columns: 3
+rowHeight: 180
+gap: 15
+canCustomize: true
+
+widgets:
+  # ردیف اول - KPIs
+  - widgetId: totalTrades
+    column: 0
+    row: 0
+    colSpan: 1
+    rowSpan: 1
+    visible: true
+    
+  - widgetId: winRate
+    column: 1
+    row: 0
+    colSpan: 1
+    rowSpan: 1
+    visible: true
+    
+  - widgetId: totalProfitLoss
+    column: 2
+    row: 0
+    colSpan: 1
+    rowSpan: 1
+    visible: true
+    
+  # ردیف دوم - نمودارها
+  - widgetId: equityCurve
+    column: 0
+    row: 1
+    colSpan: 2
+    rowSpan: 2
+    visible: true
+    settings:
+      chartType: line
+      showGrid: true
+      
+  - widgetId: winLossDistribution
+    column: 2
+    row: 1
+    colSpan: 1
+    rowSpan: 1
+    visible: true
+    settings:
+      chartType: pie
+      
+  # ردیف سوم
+  - widgetId: recentTrades
+    column: 2
+    row: 2
+    colSpan: 1
+    rowSpan: 1
+    visible: true
+    settings:
+      limit: 5
+
+# =============================================================================
+# پایان فایل: schemas/schema.dashboard.yaml
+# =============================================================================
