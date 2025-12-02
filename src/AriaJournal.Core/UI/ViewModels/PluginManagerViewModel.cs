@@ -7,6 +7,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
+using System.IO;
 using CommunityToolkit.Mvvm.Input;
 using AriaJournal.Core.Domain.Interfaces.Engines;
 using AriaJournal.Core.Domain.Events;

@@ -4,6 +4,7 @@
 // توضیح: سرویس مانیتور پوشه برای Import خودکار
 // ═══════════════════════════════════════════════════════════════════════
 
+using System.IO;
 using System.Timers;
 using AriaJournal.Core.Domain.Common;
 using AriaJournal.Core.Domain.Interfaces;

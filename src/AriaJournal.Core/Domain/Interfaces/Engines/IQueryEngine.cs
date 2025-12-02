@@ -195,42 +195,32 @@ public interface IQueryEngine
     /// <summary>
     /// اعمال مرتب‌سازی
     /// </summary>
-    IQueryable<T> ApplySort<T>(IQueryable<T> query, List<SortDefinition> sorts) where T : class;
+    IQueryable<T> ApplySort<T>(IQueryable<T> query, string sortColumn, bool ascending = true) where T : class;
 
     /// <summary>
     /// اعمال صفحه‌بندی
     /// </summary>
-    Task<PagedResult<T>> ApplyPagingAsync<T>(IQueryable<T> query, int pageNumber, int pageSize) where T : class;
-
-    /// <summary>
-    /// ساخت Expression از فیلتر
-    /// </summary>
-    Expression<Func<T, bool>> BuildExpression<T>(List<FilterDefinition> filters) where T : class;
+    IQueryable<T> ApplyPagination<T>(IQueryable<T> query, int page, int pageSize) where T : class;
 
     /// <summary>
     /// ذخیره قالب کوئری
     /// </summary>
-    Task<Result<QueryTemplate>> SaveTemplateAsync(QueryTemplate template);
+    Task<Result<bool>> SaveQueryTemplateAsync(QueryTemplate template);
 
     /// <summary>
     /// دریافت قالب‌های کوئری
     /// </summary>
-    Task<List<QueryTemplate>> GetTemplatesAsync(int userId, string entityType);
+    Task<List<QueryTemplate>> GetQueryTemplatesAsync(string? category = null);
 
     /// <summary>
     /// حذف قالب
     /// </summary>
-    Task<Result<bool>> DeleteTemplateAsync(int templateId);
+    Task<Result<bool>> DeleteQueryTemplateAsync(string templateId);
 
     /// <summary>
-    /// بارگذاری فیلترها از قالب
+    /// اعمال قالب
     /// </summary>
-    List<FilterDefinition> LoadFiltersFromTemplate(QueryTemplate template);
-
-    /// <summary>
-    /// بارگذاری مرتب‌سازی از قالب
-    /// </summary>
-    List<SortDefinition> LoadSortsFromTemplate(QueryTemplate template);
+    IQueryable<T> ApplyTemplate<T>(IQueryable<T> query, string templateId) where T : class;
 }
 
 // =============================================================================

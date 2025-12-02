@@ -12,6 +12,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
     <StartupObject>AriaJournal.Core.UI.App</StartupObject>

@@ -4,6 +4,7 @@
 // توضیح: DbContext اصلی - نسخه کامل با Entity های جدید
 // ═══════════════════════════════════════════════════════════════════════
 
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using AriaJournal.Core.Domain.Entities;
 using AriaJournal.Core.Infrastructure.Data.Configurations;

@@ -6,7 +6,6 @@
 using System.Collections.ObjectModel;
 using AriaJournal.Core.Domain.Interfaces.Engines;
 using AriaJournal.Core.Domain.Schemas;
-using AriaJournal.Core.Infrastructure.Engines;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 

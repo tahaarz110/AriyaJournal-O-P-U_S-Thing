@@ -332,6 +332,165 @@ public class ReportParameterSchema
 
 #endregion
 
+#region User Customization Schemas
+
+/// <summary>
+/// تعریف فیلد سفارشی شده توسط کاربر
+/// </summary>
+public class UserFieldCustomization
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string FieldId { get; set; } = string.Empty;
+    public bool Visible { get; set; } = true;
+    public int Order { get; set; }
+    public string? DefaultValue { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>
+/// تعریف ستون سفارشی شده توسط کاربر
+/// </summary>
+public class UserColumnCustomization
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string ColumnId { get; set; } = string.Empty;
+    public bool Visible { get; set; } = true;
+    public int Width { get; set; } = 100;
+    public int Order { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>
+/// فیلد تعریف‌شده توسط کاربر
+/// </summary>
+public class UserDefinedField
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string FieldId { get; set; } = string.Empty;
+    public string FieldName { get; set; } = string.Empty;
+    public string FieldType { get; set; } = "text";
+    public string? Description { get; set; }
+    public bool IsRequired { get; set; }
+    public int Order { get; set; }
+    public string? DefaultValue { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>
+/// سفارشی‌سازی ویجت توسط کاربر
+/// </summary>
+public class UserWidgetCustomization
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string WidgetId { get; set; } = string.Empty;
+    public bool Visible { get; set; } = true;
+    public int PositionX { get; set; }
+    public int PositionY { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
+    public Dictionary<string, object>? Settings { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+#endregion
+
+/// <summary>
+/// عملیات جدول
+/// </summary>
+public class TableActionSchema
+{
+    public string Id { get; set; } = string.Empty;
+    public string TitleFa { get; set; } = string.Empty;
+    public string? Icon { get; set; }
+    public string Type { get; set; } = "button";
+    public string? Command { get; set; }
+    public bool RequiresSelection { get; set; }
+    public int Order { get; set; }
+}
+
+#region Form & Table Schemas
+
+/// <summary>
+/// تعریف جدول
+/// </summary>
+public class TableSchema
+{
+    public string Id { get; set; } = string.Empty;
+    public string TitleFa { get; set; } = string.Empty;
+    public string? TitleEn { get; set; }
+    public string? Description { get; set; }
+    public List<ColumnSchema> Columns { get; set; } = new();
+    public List<TableActionSchema> Actions { get; set; } = new();
+    public List<FilterSchema> Filters { get; set; } = new();
+    public bool AllowAdd { get; set; } = true;
+    public bool AllowEdit { get; set; } = true;
+    public bool AllowDelete { get; set; } = true;
+    public string? DataSource { get; set; }
+    public int DefaultPageSize { get; set; } = 50;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>
+/// تعریف ستون جدول
+/// </summary>
+public class ColumnSchema
+{
+    public string Field { get; set; } = string.Empty;
+    public string HeaderFa { get; set; } = string.Empty;
+    public string? HeaderEn { get; set; }
+    public string Type { get; set; } = "text";
+    public string? BindingPath { get; set; }
+    public int Width { get; set; } = 100;
+    public bool Visible { get; set; } = true;
+    public bool IsSortable { get; set; } = true;
+    public bool IsFilterable { get; set; } = true;
+    public int Order { get; set; }
+    public string? Format { get; set; }
+    public bool IsRequired { get; set; }
+}
+
+/// <summary>
+/// تنظیم پیش‌فرض فرم
+/// </summary>
+public class FormPreset
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string PresetName { get; set; } = string.Empty;
+    public string FormId { get; set; } = string.Empty;
+    public Dictionary<string, object> FieldValues { get; set; } = new();
+    public bool IsPublic { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>
+/// فیلتر ذخیره‌شده
+/// </summary>
+public class SavedFilter
+{
+    public int Id { get; set; }
+    public int UserId { get; set; }
+    public string FilterName { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public string FilterExpression { get; set; } = string.Empty;
+    public Dictionary<string, object> FilterCriteria { get; set; } = new();
+    public bool IsShared { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+#endregion
+
 // =============================================================================
 // پایان فایل: src/AriaJournal.Core/Domain/Schemas/AdditionalSchemas.cs
 // =============================================================================

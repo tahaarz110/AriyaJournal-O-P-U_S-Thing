@@ -4,6 +4,7 @@
 // توضیح: سرویس مدیریت تصاویر معاملات
 // ═══════════════════════════════════════════════════════════════════════
 
+using System.IO;
 using AriaJournal.Core.Domain.Common;
 using AriaJournal.Core.Domain.Entities;
 using AriaJournal.Core.Domain.Interfaces;
